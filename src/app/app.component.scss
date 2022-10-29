@@ -1,0 +1,101 @@
+@mixin onTablet {
+  @media (min-width: 824px) {
+    @content;
+  }
+}
+
+@mixin onNotebook {
+  @media (min-width: 1000px) {
+    @content;
+  }
+}
+
+.header {
+  min-width: 350px;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  margin-bottom: 25px;
+  background-image: url("https://www.worldatlas.com/upload/bb/c3/32/shutterstock-1041249343.jpg");
+
+  &_title {
+    font-size: 35px;
+    font-family: sans-serif;
+    color: #fff;
+    font-weight: bold;
+    line-height: 35px;
+    text-align: center;
+    margin-bottom: 15px;
+
+    @include onTablet {
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+
+    @include onNotebook {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+  }
+
+  &_description {
+    font-size: 20px;
+    text-align: center;
+    font-family: sans-serif;
+    color: #fff;
+    line-height: 25px;
+    margin-bottom: 15px;
+
+    @include onTablet {
+      font-size: 23px;
+      margin-bottom: 15px;
+    }
+
+    @include onNotebook {
+      font-size: 27px;
+      margin-bottom: 20px;
+    }
+  }
+
+  &_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #B74B2DFF;
+    background-color: #B74B2DFF;
+    border-radius: 6px;
+    height: 50px;
+    width: 200px;
+    cursor: pointer;
+
+
+    &-link {
+      color: #fff;
+      font-size: 23px;
+      text-decoration: none;
+      font-family: sans-serif;
+      padding: 16px 61px;
+    }
+  }
+}
+
+.main {
+  min-height: 300px;
+}
+
+.footer {
+  background-color: rgba(12, 12, 12, 0.94);
+  align-items: center;
+  height: 100%;
+
+  &_title {
+    text-align: center;
+    color: #fff;
+    font-size: 30px;
+    font-family: sans-serif;
+    margin: 0;
+  }
+}

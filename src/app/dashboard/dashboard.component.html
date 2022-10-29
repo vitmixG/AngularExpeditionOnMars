@@ -1,0 +1,56 @@
+<section class="main_section">
+  <h2 class="main_section_title">Select Rover</h2>
+  <div class="main_section_container">
+    <button
+      class="main_section_button"
+      (click)="handlerRover('curiosity')"
+    >
+      Curiosity
+    </button>
+    <button
+      class="main_section_button"
+      (click)="handlerRover('opportunity')"
+    >
+      Opportunity
+    </button>
+    <button
+      class="main_section_button"
+      (click)="handlerRover('spirit')"
+    >
+      Spirit
+    </button>
+  </div>
+  <h2 class="main_section_title" *ngIf="rover">Select Sol</h2>
+  <div class="main_section_container" *ngIf="rover">
+    <input
+      type="range"
+      class="main_section_range"
+      [(ngModel)]="sol"
+      min="0"
+      max="{{ maxSol }}"
+      (change)="handlerSol(rover, sol)"
+    >
+    <h1 class="main_section_title">{{ sol }}</h1>
+  </div>
+  <h2 class="main_section_title" *ngIf="sol !== 0">Select Camera</h2>
+  <div class="main_section_container media-container">
+    <button
+      class="main_section_button cameras"
+      *ngFor="let cam of cameras"
+      (click)="handlerPhoto(cam)"
+    >
+      {{ cam }}
+    </button>
+  </div>
+</section>
+<section class="main_section-container" *ngIf="camera !== '' ">
+  <h2 class="main_section_title">Photos</h2>
+  <p class="main_section_paragraph">Your choose: {{rover}}, <br> your sol: {{sol}} <br> camera: {{camera}}</p>
+  <div class="main_section_container media-container">
+    <img
+      class="main_section_photo"
+      *ngFor="let photo of photos"
+      src="{{ photo }}"
+      alt="mars photo">
+  </div>
+</section>

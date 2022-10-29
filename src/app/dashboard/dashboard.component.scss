@@ -1,0 +1,117 @@
+@mixin onTablet {
+  @media (min-width: 824px) {
+    @content;
+  }
+}
+
+@mixin onNotebook {
+  @media (min-width: 1000px) {
+    @content;
+  }
+}
+
+.main_section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &_title {
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 10px;
+
+    @include onTablet {
+      font-size: 45px;
+      margin-bottom: 15px;
+    }
+
+    @include onNotebook {
+      font-size: 55px;
+      margin-bottom: 20px;
+    }
+  }
+
+  &_paragraph {
+    font-family: sans-serif;
+    font-size: 30px;
+    color: #fff;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  &_button {
+    background: #B74B2DFF;
+    color: #fff;
+    font-family: sans-serif;
+    font-size: 19px;
+    min-width: 200px;
+    min-height: 50px;
+    margin: 15px;
+    border: 1px solid black;
+    border-radius: 6px;
+  }
+
+  &_container {
+    max-width: 500px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+
+    @include onTablet {
+      max-width: 800px;
+      flex-direction: row;
+    }
+
+    @include onNotebook {
+      max-width: 1500px;
+      flex-direction: row;
+    }
+  }
+
+  &_photo {
+    object-fit: cover;
+    max-width: 360px;
+    max-height: 360px;
+    margin-bottom: 30px;
+
+  }
+
+  &_range {
+    min-width: 300px;
+  }
+}
+
+.cameras {
+  min-width: 300px;
+  min-height: 50px;
+}
+
+.media-container{
+  @include onTablet {
+    min-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 8px;
+  }
+
+  @include onNotebook {
+    min-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    grid-gap: 10px;
+  }
+}

@@ -1,6 +1,6 @@
 <section class="main_section">
-  <h2 class="main_section_title">Select Rover</h2>
-  <div class="main_section_container">
+  <h2 @fadeIn class="main_section_title">Select Rover</h2>
+  <div @fadeIn class="main_section_container">
     <button
       class="main_section_button"
       (click)="handlerRover('curiosity')"
@@ -20,8 +20,8 @@
       Spirit
     </button>
   </div>
-  <h2 class="main_section_title" *ngIf="rover">Select Sol</h2>
-  <div class="main_section_container" *ngIf="rover">
+  <h2 @fadeIn class="main_section_title" *ngIf="rover">Select Sol</h2>
+  <div @fadeIn class="main_section_container" *ngIf="rover">
     <input
       type="range"
       class="main_section_range"
@@ -30,10 +30,12 @@
       max="{{ maxSol }}"
       (change)="handlerSol(rover, sol)"
     >
-    <h1 class="main_section_title">{{ sol }}</h1>
+    <h1 @fadeIn class="main_section_title">{{ sol }}</h1>
   </div>
-  <h2 class="main_section_title" *ngIf="sol !== 0">Select Camera</h2>
-  <div class="main_section_container media-container">
+  <h2 @fadeIn class="main_section_title" *ngIf="sol !== 0">Select Camera</h2>
+  <ngx-spinner type="ball-scale-multiple"><p style="color: white" > Loading... </p></ngx-spinner>
+  <h2 @fadeIn *ngIf="hasError || cameras.length === 0 && sol !== 0 && isLoading" class="main_section_title">Unfortunately photo list is empty</h2>
+  <div @fadeIn class="main_section_container media-container">
     <button
       class="main_section_button cameras"
       *ngFor="let cam of cameras"
@@ -47,10 +49,18 @@
   <h2 class="main_section_title">Photos</h2>
   <p class="main_section_paragraph">Your choose: {{rover}}, <br> your sol: {{sol}} <br> camera: {{camera}}</p>
   <div class="main_section_container media-container">
-    <img
+    <img @fadeIn
       class="main_section_photo"
-      *ngFor="let photo of photos"
+      *ngFor="let photo of photos.slice(0, visibleItems)"
       src="{{ photo }}"
       alt="mars photo">
+    <button
+      @fadeIn
+      class="main_section_button load_button_container"
+      (click)="seeMore()"
+      *ngIf="visibleItems <= photos.length || photos.length === 0"
+    >
+      Load More...
+    </button>
   </div>
 </section>

@@ -1,5 +1,5 @@
 @mixin onTablet {
-  @media (min-width: 824px) {
+  @media (min-width: 700px) {
     @content;
   }
 }
@@ -92,16 +92,25 @@
   min-height: 50px;
 }
 
+.load_button_container {
+  width: 200px;
+  margin: 0 auto;
+
+  @include onNotebook {
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+}
+
 .media-container{
   @include onTablet {
-    min-width: 900px;
+    min-width: 700px;
     margin: 0 auto;
     display: grid;
     align-items: center;
-    justify-items: center;
+    justify-self: center;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-gap: 8px;
+    grid-gap: 3px;
   }
 
   @include onNotebook {
@@ -109,7 +118,6 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
     align-items: center;
     justify-items: center;
     grid-gap: 10px;

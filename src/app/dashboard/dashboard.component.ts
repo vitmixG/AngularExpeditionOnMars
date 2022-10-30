@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {animate, style, transition, trigger} from "@angular/animations";
+import {NgxSpinnerService} from "ngx-spinner";
 
 interface ResponseFromServerArray {
   photos: ResponseFromServerObject[];
@@ -10,14 +12,6 @@ interface ResponseFromServerObject {
   "sol": number,
   "camera": Camera,
   "img_src": string,
-  "earth_date": string,
-  "rover": {
-    "id": number,
-    "name": string,
-    "landing_date": string,
-    "launch_date": string,
-    "status": string,
-  }
 }
 
 interface Camera {
@@ -30,7 +24,15 @@ interface Camera {
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      transition('void => *', [
+        style({ opacity: 0, transform: "translateY(20)" }),
+        animate(2500, style({ opacity: 100, transform: "translateY(-20)" }) ),
+      ]),
+    ])
+  ],
 })
 
 
@@ -43,11 +45,14 @@ export class DashboardComponent implements OnInit {
   camera: string = '';
   cameras: string[] = [];
   photos: string[] = [];
-
+  visibleItems: number = 6;
   APIkey: string = '&api_key=NbgXqrphpscURc7XOcc7vxRS7C7U5Bn9OYKNo9Z5';
   photoUrl: string = 'curiosity/photos?sol=1200';
+  isLoading: boolean = false;
+  hasError: boolean = false;
+  error: string = '';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private spinner: NgxSpinnerService) {
     this.photoUrl = 'https://api.nasa.gov/mars-photos/api/v1/rovers/';
   }
 
@@ -93,15 +98,29 @@ export class DashboardComponent implements OnInit {
   handlerSol(rover: string, sol: number) {
     this.photos = [];
     this.camera = '';
+    this.isLoading = true;
     this.getPhoto(rover, sol).subscribe(res => {
+      this.spinner.show("mySpinner", {
+        type: "line-scale-party",
+        size: "default",
+        color: "white"});
       this.response = res.photos;
       this.cameras = [...new Set(res.photos.map(element => element.camera.full_name))]
-    });
+    }, error => {
+      this.hasError = true;
+      this.error = error;
+    },
+      () => { this.spinner.hide(); this.isLoading = false; });
   }
 
   handlerPhoto(camera: string) {
+    this.visibleItems = 6;
     this.camera = camera;
     this.photos = [];
     this.photos = this.response.filter(arr => arr.camera.full_name === camera).map(arr => arr.img_src);
+  }
+
+  seeMore() {
+    this.visibleItems += 6;
   }
 }

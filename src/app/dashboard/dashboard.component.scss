@@ -81,10 +81,6 @@
     margin-bottom: 30px;
 
   }
-
-  &_range {
-    min-width: 300px;
-  }
 }
 
 .cameras {
@@ -122,4 +118,41 @@
     justify-items: center;
     grid-gap: 10px;
   }
+}
+
+.loading {
+  font-family: sans-serif;
+  font-size: 30px;
+  color: #fff;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.slider {
+  -webkit-appearance: none;
+  min-width: 300px;
+  background-color: #B74B2DFF;
+  outline: none;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  margin: 12px 0 15px 0;
+  cursor: pointer;
+  border-radius: 26px;
+
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background: #fff;
+  }
+}
+
+.progress {
+  margin-left: 15px;
 }

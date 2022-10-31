@@ -24,17 +24,18 @@
   <div @fadeIn class="main_section_container" *ngIf="rover">
     <input
       type="range"
-      class="main_section_range"
+      class="slider"
       [(ngModel)]="sol"
       min="0"
       max="{{ maxSol }}"
       (change)="handlerSol(rover, sol)"
     >
-    <h1 @fadeIn class="main_section_title">{{ sol }}</h1>
+    <h2 class="main_section_title progress">{{ sol }}</h2>
   </div>
   <h2 @fadeIn class="main_section_title" *ngIf="sol !== 0">Select Camera</h2>
-  <ngx-spinner type="ball-scale-multiple"><p style="color: white" > Loading... </p></ngx-spinner>
-  <h2 @fadeIn *ngIf="hasError || cameras.length === 0 && sol !== 0 && isLoading" class="main_section_title">Unfortunately photo list is empty</h2>
+  <p class="loading" *ngIf="isLoading"> Loading... </p>
+  <h2 @fadeIn *ngIf="hasError && !isLoading" class="main_section_title">404, Some trobles with {{ error }}</h2>
+  <h2 @fadeIn *ngIf="cameras.length === 0 && sol !== 0 && !isLoading" class="main_section_title">Unfortunately photo list is empty</h2>
   <div @fadeIn class="main_section_container media-container">
     <button
       class="main_section_button cameras"

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {animate, style, transition, trigger} from "@angular/animations";
-import {NgxSpinnerService} from "ngx-spinner";
 
 interface ResponseFromServerArray {
   photos: ResponseFromServerObject[];
@@ -52,7 +51,7 @@ export class DashboardComponent implements OnInit {
   hasError: boolean = false;
   error: string = '';
 
-  constructor(private http: HttpClient, private spinner: NgxSpinnerService) {
+  constructor(private http: HttpClient) {
     this.photoUrl = 'https://api.nasa.gov/mars-photos/api/v1/rovers/';
   }
 
@@ -82,11 +81,11 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  getPhoto(rover: string, sol: number) {
+  public getPhoto(rover: string, sol: number) {
     return this.http.get<ResponseFromServerArray>(this.photoUrl + rover + '/photos?sol=' + sol + '&' + this.APIkey )
   }
 
-  handlerRover(rover: string) {
+  public handlerRover(rover: string) {
     this.photos = [];
     this.rover = rover;
     this.sol = 0;
@@ -95,32 +94,28 @@ export class DashboardComponent implements OnInit {
     this.cameras = [];
   }
 
-  handlerSol(rover: string, sol: number) {
+  public handlerSol(rover: string, sol: number) {
     this.photos = [];
     this.camera = '';
     this.isLoading = true;
     this.getPhoto(rover, sol).subscribe(res => {
-      this.spinner.show("mySpinner", {
-        type: "line-scale-party",
-        size: "default",
-        color: "white"});
       this.response = res.photos;
       this.cameras = [...new Set(res.photos.map(element => element.camera.full_name))]
     }, error => {
       this.hasError = true;
       this.error = error;
     },
-      () => { this.spinner.hide(); this.isLoading = false; });
+      () => { this.isLoading = false; });
   }
 
-  handlerPhoto(camera: string) {
+  public handlerPhoto(camera: string) {
     this.visibleItems = 6;
     this.camera = camera;
     this.photos = [];
     this.photos = this.response.filter(arr => arr.camera.full_name === camera).map(arr => arr.img_src);
   }
 
-  seeMore() {
+  public seeMore() {
     this.visibleItems += 6;
   }
 }
